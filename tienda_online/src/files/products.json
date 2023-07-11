@@ -1,0 +1,35 @@
+[
+	{
+		"id": "7aac9abf-ae8b-4246-aed8-cbd56c0d7f9f",
+		"title": "Nike Air Max",
+		"description": "Zapatillas deportivas para correr",
+		"price": 55000,
+		"category": "Calzado Running",
+		"thumbnail": "https://media.nike.com/ae/en_us/dw/600c1153-d860-446c-b8c9-7d50975a43ad.jpg",
+		"code": "NM1234",
+		"stock": 10,
+		"status": true
+	},
+	{
+		"id": "03881635-e8a1-4ea8-baeb-eb77d6efc055",
+		"title": "Adidas Ultraboost",
+		"description": "Zapatillas deportivas para running con tecnología de amortiguación",
+		"price": 62400,
+		"category": "Calzado deportivo",
+		"thumbnail": "https://www.example.com/images/adidas-ultraboost.jpg",
+		"code": "ADUB123",
+		"stock": 20,
+		"status": true
+	},
+	{
+		"id": "e7426439-5948-42a3-afba-4176cc5f3ff4",
+		"title": "Asics Gel-Kayano 28",
+		"description": "Zapatillas de running de alta gama con tecnología de soporte y amortiguación",
+		"price": 19999,
+		"category": "Calzado deportivo",
+		"thumbnail": "https://www.example.com/images/asics-gel-kayano-28.jpg",
+		"code": "ASKY28",
+		"stock": 10,
+		"status": true
+	}
+]

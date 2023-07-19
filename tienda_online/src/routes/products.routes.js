@@ -3,10 +3,10 @@ import { ProductManager } from "../dao/productManager.js";
 
 const productService = new ProductManager('products.json');
 
-const validateFields = (req,res,next)=>{
+const validateFields = (req, res, next) => {
     const productInfo = req.body;
-    if(!productInfo.title || !productInfo.description || !productInfo.price || !productInfo.category || !productInfo.code || !productInfo.stock || !productInfo.status){
-        return res.json({status:"error", message:"Los campos están incompletos"})
+    if (!productInfo.title || !productInfo.description || !productInfo.price || !productInfo.category || !productInfo.code || !productInfo.stock || !productInfo.status) {
+        return res.status(400).json({ status: "error", message: "Los campos están incompletos" });
     } else {
         next();
     }
@@ -26,60 +26,58 @@ router.get("/", async (req, res) => {
             limitedProducts = products;
         }
 
-        res.json({ status: "success", data: limitedProducts });
+        res.render("home", { products: limitedProducts }); 
     } catch (error) {
-        res.json({ status: "error", message: error.message });
+        res.status(500).json({ status: "error", message: error.message });
     }
 });
 
-
-
-
-router.get("/:pid", async(req,res)=>{
+router.get("/:pid", async (req, res) => {
     try {
         const productId = req.params.pid;
-        const product = await productService.getProductById(productId); 
-        res.json({status:"success", data:product, message:"Producto encontrado"});
+        const product = await productService.getProductById(productId);
+
+        if (product) {
+            res.json({ status: "success", data: product, message: "Producto encontrado" });
+        } else {
+            res.status(404).json({ status: "error", message: "Producto no encontrado" });
+        }
     } catch (error) {
-        res.json({status:"error", message:error.message});
+        res.status(500).json({ status: "error", message: error.message });
     }
 });
 
-router.post("/", validateFields, async(req,res)=>{
-    //Agregar el producto
+router.post("/", validateFields, async (req, res) => {
     try {
         const productInfo = req.body;
         const productCreated = await productService.save(productInfo);
-        res.json({status:"success", data:productCreated, message:"Producto creado"});
+        res.json({ status: "success", data: productCreated, message: "Producto creado" });
     } catch (error) {
-        res.json({status:"error", message:error.message});
+        res.status(500).json({ status: "error", message: error.message });
     }
 });
 
 router.put("/:pid", validateFields, async (req, res) => {
     try {
-        const productId = req.params.pid; 
-        const updatedFields = req.body; 
+        const productId = req.params.pid;
+        const updatedFields = req.body;
         const updatedProduct = await productService.updateProduct(productId, updatedFields);
 
         res.json({ status: "success", data: updatedProduct, message: "Producto actualizado" });
     } catch (error) {
-        res.json({ status: "error", message: error.message });
+        res.status(500).json({ status: "error", message: error.message });
     }
 });
 
-
-
 router.delete("/:pid", async (req, res) => {
     try {
-        const productId = req.params.pid; 
+        const productId = req.params.pid;
         await productService.deleteProduct(productId);
 
         res.json({ status: "success", message: "Producto eliminado" });
     } catch (error) {
-        res.json({ status: "error", message: error.message });
+        res.status(500).json({ status: "error", message: error.message });
     }
 });
 
-
-export {router as productsRouter}
+export { router as productsRouter };

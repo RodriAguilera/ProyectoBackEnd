@@ -1,0 +1,29 @@
+            <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8" id="productList">
+                {{#each products}}
+                     <ul>
+                      <li>{{this.title}}</li>
+                      <li>{{this.description}}</li>
+                      <li>${{this.price}}</li>
+                       <li>{{this.category}}</li>
+                       <br>
+                      <button class="delete-btn rounded-lg outline outline-offset-2 outline-2 outline-red-500/70 p-1" data-id="{{this.id}}">Eliminar producto</button>
+                     </ul>
+                {{/each}}
+
+            </div>
+
+              <div class="bg-white">
+        <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+            <form id="createProductForm">
+    <input class="rounded-lg outline outline-offset-2 outline-2 my-2" type="text" name="title" placeholder="Titulo" required> <br>
+    <input class="rounded-lg outline outline-offset-2 outline-2 my-2 " type="number" name="price" placeholder="Precio" required> <br>
+    <button type="submit" class="rounded-full outline outline-offset-2 outline-2 outline-teal-400 p-1 my-2">Crear producto</button>
+            </form>
+
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+ <script src="/js/realTimeProducts.js"></script>
+
+

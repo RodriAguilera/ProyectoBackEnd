@@ -5,7 +5,7 @@
 		"description": "Zapatillas deportivas para correr",
 		"price": 55000,
 		"category": "Calzado Running",
-		"thumbnail": "https://media.nike.com/ae/en_us/dw/600c1153-d860-446c-b8c9-7d50975a43ad.jpg",
+		"thumbnail": "/img/nikeAirMax.jpg",
 		"code": "NM1234",
 		"stock": 10,
 		"status": true
@@ -16,7 +16,7 @@
 		"description": "Zapatillas deportivas para running con tecnología de amortiguación",
 		"price": 62400,
 		"category": "Calzado deportivo",
-		"thumbnail": "https://www.example.com/images/adidas-ultraboost.jpg",
+		"thumbnail": "https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw515ca8e8/products/AD_GX3062/AD_GX3062-1.JPG",
 		"code": "ADUB123",
 		"stock": 20,
 		"status": true
@@ -25,11 +25,22 @@
 		"id": "e7426439-5948-42a3-afba-4176cc5f3ff4",
 		"title": "Asics Gel-Kayano 28",
 		"description": "Zapatillas de running de alta gama con tecnología de soporte y amortiguación",
-		"price": 19999,
+		"price": 49999,
 		"category": "Calzado deportivo",
-		"thumbnail": "https://www.example.com/images/asics-gel-kayano-28.jpg",
+		"thumbnail": "https://asics.vteximg.com.br/arquivos/ids/177364-700-700/1012B187_700_1.jpg?v=637928051991200000",
 		"code": "ASKY28",
 		"stock": 10,
+		"status": true
+	},
+	{
+		"id": "4f8b8f7d-69e9-4a1f-8c77-998d29f35a76",
+		"title": "Puma RS-X",
+		"description": "Zapatillas deportivas con diseño retro y tecnología de amortiguación",
+		"price": 74990,
+		"category": "Calzado deportivo",
+		"thumbnail": "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwd261252e/products/PU392339-16/PU392339-16-1.JPG",
+		"code": "PMRSX456",
+		"stock": 15,
 		"status": true
 	}
 ]

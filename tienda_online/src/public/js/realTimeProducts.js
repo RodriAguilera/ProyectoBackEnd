@@ -13,19 +13,33 @@ productForm.addEventListener('submit', (event) => {
   productForm.reset();
 });
 
-// Escuchar evento 'newProduct' del servidor
+// Escucha evento 'newProduct' del servidor
 socketClient.on('newProduct', (newProduct) => {
   const productList = document.getElementById('productList');
+
+  const productDiv = document.createElement('div');
+  productDiv.classList.add('grid', 'grid-cols-1', 'gap-y-2', 'text-center');
+
   
-  const titleElement = document.createElement('li');
+  const titleElement = document.createElement('p');
   titleElement.textContent = newProduct.title;
 
-  const priceElement = document.createElement('li');
+  const priceElement = document.createElement('p');
   priceElement.textContent = `$${newProduct.price}`;
 
-  productList.appendChild(titleElement);
-  productList.appendChild(priceElement);
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Eliminar producto';
+  deleteButton.classList.add('delete-btn', 'rounded-lg', 'outline', 'outline-offset-2', 'outline-2', 'outline-red-500/70', 'p-1');
+  deleteButton.dataset.id = newProduct.id;
+
+  productDiv.appendChild(titleElement);
+  productDiv.appendChild(priceElement);
+  productDiv.appendChild(deleteButton);
+
+
+  productList.appendChild(productDiv);
 });
+
 
 //Eliminar product
 document.getElementById('productList').addEventListener('click', (event) => {

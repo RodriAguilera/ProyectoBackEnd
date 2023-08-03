@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { ProductManager } from "../dao/productManager.js";
+import { ProductsMongo } from "../dao/managers/mongo/productsMongo.js";
 
-const productService = new ProductManager('products.json');
+const productService = new ProductsMongo();
 
 const validateFields = (req, res, next) => {
     const productInfo = req.body;
@@ -26,7 +26,6 @@ router.get("/", async (req, res) => {
             limitedProducts = products;
         }
 
-        res.render("home", { products: limitedProducts }); 
     } catch (error) {
         res.status(500).json({ status: "error", message: error.message });
     }

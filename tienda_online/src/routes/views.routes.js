@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ProductManager } from '../dao/productManager.js';
+import { ProductManager } from '../dao/managers/fileSystem/productManager.js';
 
 const productService = new ProductManager('products.json');
 const router = Router();
@@ -22,6 +22,11 @@ router.get('/realtimeproducts', async (req, res) => {
         res.status(500).json({ status: 'error', message: error.message });
     }
 })
-;
+
+router.get("/chat",(req,res)=>{
+        res.render("chat");
+
+} );
+
 
 export { router as viewsRouter };

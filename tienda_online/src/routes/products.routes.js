@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
         } else {
             limitedProducts = products;
         }
-
+        res.render("home", { products: limitedProducts }); 
     } catch (error) {
         res.status(500).json({ status: "error", message: error.message });
     }

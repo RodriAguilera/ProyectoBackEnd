@@ -1,7 +1,11 @@
 import { Router } from 'express';
-import { ProductManager } from '../dao/managers/fileSystem/productManager.js';
+// import { ProductManager } from '../dao/managers/fileSystem/productManager.js';
 
-const productService = new ProductManager('products.json');
+// const productService = new ProductManager('products.json');
+
+import { ProductsMongo } from "../dao/managers/mongo/productsMongo.js";
+
+const productService = new ProductsMongo();
 const router = Router();
 
 router.get('/', async (req, res) => {
@@ -15,7 +19,7 @@ router.get('/', async (req, res) => {
 
 router.get('/realtimeproducts', async (req, res) => {
     try {
-        const productService = new ProductManager("products.json");
+        // const productService = new ProductManager("products.json");
         const products = await productService.get();
         res.render('realTimeProducts', { products }); 
     } catch (error) {

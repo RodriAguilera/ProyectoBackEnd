@@ -4,6 +4,6 @@ export const config = {
         port:8080,
     },
     mongo:{
-        url:"mongodb+srv://rodrigoaguilera99519:M4g4li2104@cluster0.re8pknm.mongodb.net/ecommerce43380DB?retryWrites=true&w=majority"
+        url:"mongodb+srv://rodrigoaguilera99519:VJ6JK99OXv6d7lOH@cluster0.re8pknm.mongodb.net/ecommerce43380DB?retryWrites=true&w=majority"
     }
 }

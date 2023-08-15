@@ -8,7 +8,6 @@ import { productsRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
 import { viewsRouter } from "./routes/views.routes.js";
 import {config} from "./config/config.js"
-import { connectDB } from "./config/dbConnection.js";
 import { chatModel } from "./dao/models/chat.model.js"
 
 const port = config.server.port;
@@ -24,9 +23,6 @@ app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "/views"));
 
 
-
-//conexión a la base de datos
-connectDB();
 
 // Guardar el servidor HTTP express en una variable
 const httpServer = app.listen(port, () =>

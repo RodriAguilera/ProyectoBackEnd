@@ -1,16 +1,6 @@
-// "title": "Puma RS-X",
-// 		"description": "Zapatillas deportivas con diseño retro y tecnología de amortiguación",
-// 		"price": 74990,
-// 		"category": "Calzado Running",
-// 		"thumbnail": "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwd261252e/products/PU392339-16/PU392339-16-1.JPG",
-// 		"code": "PMRSX456",
-// 		"stock": 15,
-// 		"status": true
-
 import mongoose from "mongoose";
-
-//nombre de la collecion de productos
-const productsCollection = "products";
+import mongoosePaginate from "mongoose-paginate-v2";
+import { productsCollection } from "../managers/mongo/index.js"
 
 //esquema de productos
 const productSchema = new mongoose.Schema({
@@ -37,7 +27,7 @@ const productSchema = new mongoose.Schema({
     category:{
         type:String,
         required:true,
-        enum:["Calzado Running"]
+        enum:["Calzado Running", "Calzado urbano"]
     },
     stock:{
         type:Number,
@@ -48,5 +38,6 @@ const productSchema = new mongoose.Schema({
         required:true
     }
 });
+productSchema.plugin(mongoosePaginate);
 
 export const productsModel = mongoose.model(productsCollection,productSchema);

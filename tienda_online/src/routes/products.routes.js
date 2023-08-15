@@ -1,26 +1,23 @@
 import { Router } from "express";
-import { ProductsMongo } from "../dao/managers/mongo/productsMongo.js";
+import { productService } from "../dao/index.js";
 
-const productService = new ProductsMongo();
 
 const router = Router();
 
 router.get("/", async (req, res) => {
     try {
-        const limit = req.query.limit;
+        const limit = req.query.limit || 10; 
         const products = await productService.get();
 
-        let limitedProducts;
-        if (limit) {
-            limitedProducts = products.slice(0, +limit);
-        } else {
-            limitedProducts = products;
-        }
-       
+        const limitedProducts = products.slice(0, +limit);
+
+        res.json({ status: "success", data: limitedProducts });
+   
     } catch (error) {
         res.status(500).json({ status: "error", message: error.message });
     }
 });
+
 
 router.get("/:pid", async (req, res) => {
     try {

@@ -1,5 +1,6 @@
 import {productsModel} from "../../models/products.model.js";
 
+
 export class ProductsMongo{
     constructor(){
         this.model = productsModel;
@@ -8,7 +9,7 @@ export class ProductsMongo{
     //get products
     async get(){
         try{
-            const products = await this.model.find();
+            const products = await this.model.find().lean();
             return products;
         }catch(error){
             console.log(error.message);
@@ -17,20 +18,16 @@ export class ProductsMongo{
         }
     };
 
-    async getProductById(id){
-        //devuelve el producto que cumple con el id recibido
-        try{
-            const product = await this.model.findById(id);
-            if(!id){
-                throw new Error("El producto no existe")
-            }
-            return product;
-        }catch(error){
-            console.log(error.message);
-            // throw error
-            throw new Error("Hubo un error al obtener el producto");
+    async getWithPaginate(query, options){
+        try {
+            const result = await this.model.paginate(query, options);
+            return result;
+        } catch (error) {
+            throw error;
         }
-    };
+    }
+
+ 
 
     //save product
     async save(productInfo){
@@ -74,4 +71,15 @@ export class ProductsMongo{
             throw new Error("Hubo un error al eliminar el producto");
         }
     };
+
+    //productById
+    async getProductById(id) {
+        try {
+            const product = await this.model.findById(id).lean();
+            return product;
+        } catch (error) {
+            console.log(error.message);
+            throw new Error("Hubo un error al obtener el producto");
+        }
+    }
 }

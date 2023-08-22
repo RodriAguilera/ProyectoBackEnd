@@ -9,6 +9,9 @@ import { cartsRouter } from "./routes/carts.routes.js";
 import { viewsRouter } from "./routes/views.routes.js";
 import {config} from "./config/config.js"
 import { chatModel } from "./dao/models/chat.model.js"
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import {sessionsRouter} from "./routes/sessions.routes.js"
 
 const port = config.server.port;
 const app = express();
@@ -88,6 +91,19 @@ io.on("connection",(socket)=>{
 
 
 
+//configuracion de las sessiones en el servidor
+app.use(session({
+  store: MongoStore.create({
+      mongoUrl:"mongodb+srv://rodrigoaguilera99519:VJ6JK99OXv6d7lOH@cluster0.re8pknm.mongodb.net/loginDB?retryWrites=true&w=majority"
+  }),
+  secret:"loginSecretKey",//cifra el id de la sesion dentro de la cookie
+  resave:true,
+  saveUninitialized:true
+}));//req.session
+
+
+
+
 
 
 
@@ -96,6 +112,7 @@ io.on("connection",(socket)=>{
 app.use("/api/products", productsRouter);
 app.use("/api/products/:pid", productsRouter);
 app.use("/api/carts", cartsRouter);
+app.use("/api/sessions", sessionsRouter);
 
 
 

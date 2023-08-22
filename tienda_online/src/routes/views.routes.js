@@ -5,7 +5,7 @@ import { Router } from 'express';
 // const productService = new ProductManager('products.json');
 
 import { productService, cartService } from "../dao/index.js";
-
+import { checkUserAuthenticated, showLoginView } from "../dao/middlewares/auth.js";
 
 const router = Router();
 
@@ -32,7 +32,7 @@ router.get("/chat",(req,res)=>{
 
 router.get("/products", async (req, res) => {
     try {
-        const { limit = 10, page = 1, stock, sort = "asc", category } = req.query;
+        const { limit = 3, page = 1, stock, sort = "asc", category } = req.query;
 
         const stockValue = stock === "0" ? undefined : parseInt(stock);
         if (!["asc", "desc"].includes(sort)) {
@@ -69,6 +69,7 @@ router.get("/products", async (req, res) => {
             nextLink: result.hasNextPage
                 ? `${baseUrl}/products?${currentQueryString}&page=${result.nextPage}`
                 : null,
+                user: req.session.userInfo,
         };
 
         res.render("products", resultProductsView);
@@ -96,7 +97,7 @@ router.get("/products/:pid", async (req, res) => {
 });
 
 
-router.get("/carts/:cid", async (req, res) => {
+router.get("/carts/:cid/products/:pid", async (req, res) => {
     try {
         const cartId = req.params.cid;
         const { cart, products } = await cartService.viewCart(cartId); 
@@ -107,9 +108,18 @@ router.get("/carts/:cid", async (req, res) => {
 });
 
 
+router.get("/registro",showLoginView,(req,res)=>{
+    res.render("signup");
+});
 
+router.get("/login", showLoginView, (req,res)=>{
+    res.render("login");
+});
 
-
+router.get("/perfil", checkUserAuthenticated, (req,res)=>{
+    console.log(req.session);
+    res.render("profile",{user: req.session.userInfo});
+});
 
 
 

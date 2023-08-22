@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { ProductsMongo } from "./managers/mongo/productsMongo.js";
 import { CartsMongo } from "./managers/mongo/cartsMongo.js";
 import { connectDB} from "../config/dbConnection.js";
+import { UsersMongo } from "./managers/mongo/usersMongo.js";
 
 //persistencia de archivos
 // const productService = new ProductManager(config.fileSystem.productsFile);
@@ -12,8 +13,14 @@ import { connectDB} from "../config/dbConnection.js";
 //persistencia de mongoDB
 connectDB();
 
+
+
+
 const productService = new ProductsMongo();
 const cartService = new CartsMongo();
-
-
 export {productService, cartService}
+
+
+
+export const usersService = new UsersMongo();
+

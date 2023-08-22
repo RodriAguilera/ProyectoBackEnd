@@ -45,34 +45,35 @@ router.get("/:cid", async (req, res) => {
 });
 
 
-// router.post("/:cid/product/:pid", async (req, res) => {
-//     try {
-//         const cartId = req.params.cid;
-//         const productId = req.params.pid;
+router.post("/:cid/products/:pid", async (req, res) => {
+    try {
+        const cartId = req.params.cid;
+        console.log(`Server - Cart ID: ${cartId}`);
+        const productId = req.params.pid;
 
-//         const cart = await cartService.getById(cartId);
-//         const product = await productService.getById(productId);
+        const cart = await cartService.getById(cartId);
+        const product = await productService.getById(productId);
 
-//         if (!cart || !product) {
-//             return res.json({ status: "error", message: "Carrito o producto no encontrado" });
-//         }
+        if (!cart || !product) {
+            return res.json({ status: "error", message: "Carrito o producto no encontrado" });
+        }
 
-//         const existingProduct = cart.products.find(p => p.product.toString() === productId);
-//         if (existingProduct) {
+        const existingProduct = cart.products.find(p => p.product.toString() === productId);
+        if (existingProduct) {
 
-//             existingProduct.quantity += 1;
-//         } else {
+            existingProduct.quantity += 1;
+        } else {
    
-//             cart.products.push({ product: productId, quantity: 1 });
-//         }
+            cart.products.push({ product: productId, quantity: 1 });
+        }
 
-//         await cartService.update(cartId, cart);
+        await cartService.update(cartId, cart);
         
-//         res.json({ status: "success", message: "Producto agregado al carrito" });
-//     } catch (error) {
-//         res.json({ status: "error", message: error.message });
-//     }
-// });
+        res.json({ status: "success", message: "Producto agregado al carrito" });
+    } catch (error) {
+        res.json({ status: "error", message: error.message });
+    }
+});
 
 router.delete("/:cid/products/:pid", async (req, res) => {
     try {
@@ -138,29 +139,16 @@ router.delete("/:cid", async (req, res) => {
     }
 });
 
-router.get("/:cid", async (req, res) => {
+router.get("/:cid/products/:pid", async (req, res) => {
     try {
         const cartId = req.params.cid;
-        const { cart, products } = await cartMongo.viewCart(cartId);
-
-        res.render("cart", { cart, products });
+        const { cart, products } = await cartService.viewCart(cartId); 
+        res.render("cart", { cart, products }); 
     } catch (error) {
         res.status(500).json({ status: "error", message: error.message });
     }
 });
 
-router.post("/:cid/product/:pid", async (req, res) => {
-    try {
-        const cartId = req.params.cid;
-        const productId = req.params.pid;
-
-        const updatedCart = await cartMongo.addToCart(cartId, productId);
-
-        res.json({ status: "success", message: "Producto agregado al carrito" });
-    } catch (error) {
-        res.json({ status: "error", message: error.message });
-    }
-});
 
 
 export {router as cartsRouter}

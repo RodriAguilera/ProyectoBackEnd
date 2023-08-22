@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
-import { cartsCollection } from "../managers/mongo/index.js";
+
+import { cartsCollection, productsCollection } from "../managers/mongo/index.js";
 
 const cartSchema = new mongoose.Schema({
-    products:{
-        type:[],
-        default:[]
-    }
+  products: [{
+    productId: { type: mongoose.Schema.Types.ObjectId, ref: productsCollection, required: true },
+    quantity: { type: Number, required: true, min: 1 }
+  }]
 });
 
-export const cartModel = mongoose.model(cartsCollection,cartSchema); 
+export const cartModel = mongoose.model(cartsCollection, cartSchema);

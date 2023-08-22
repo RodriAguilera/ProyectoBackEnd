@@ -6,13 +6,9 @@ const router = Router();
 
 router.get("/", async (req, res) => {
     try {
-        const limit = req.query.limit || 10; 
+     
         const products = await productService.get();
-
-        const limitedProducts = products.slice(0, +limit);
-
-        res.json({ status: "success", data: limitedProducts });
-   
+        res.json({ status: "success", message: "Productos encontrados" });
     } catch (error) {
         res.status(500).json({ status: "error", message: error.message });
     }

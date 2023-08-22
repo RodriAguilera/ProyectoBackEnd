@@ -1,17 +1,26 @@
-<div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-            <img src="{{this.thumbnail}}" alt="{{this.title}}" class="h-full w-full object-cover object-center group-hover:opacity-75">
-          </div>
+<header class="bg-white shadow">
+  <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900">ZapasOnline</h1>
+  </div>
+</header>
 
+<div class="bg-white">
+  <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+     <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 xl:gap-x-8 text-center">
+       <div class="group">
+        <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+            <img src="{{product.thumbnail}}" alt="{{product.title}}" class="h-full w-full object-cover object-center" >
+          </div>
+</div>
+ <div class="group  grid content-center">
           {{#if error}}
         <p>{{error}}</p>
         {{else}}
-          <h3 class="mt-4 text-sm text-gray-700">{{this.title}}</h3>
-          <p class="mt-4 text-sm text-gray-700">{{this.category}}</p>
-          <p class="mt-4 text-sm text-gray-700">{{this.description}}</p>
-          <p class="mt-1 text-lg font-medium text-gray-900">${{this.price}}</p>
-          <p class="mt-1 text-lg font-medium text-gray-700">Stock: {{this.stock}}</p>
-        
-        <button class="rounded-lg outline outline-offset-2 outline-2 outline-green-500/70 p-1" data-id="{{this.id}}" data-cartid="{{cart._id}}">Agregar al carrito</button>
+          <h3 class="mt-1 text-lg font-medium text-gray-900">{{product.title}}</h3>
+          <p class="mt-4 text-sm text-gray-900"> <strong>Categoría:</strong> {{product.category}}<br><br><strong>Descripción:</strong>  {{product.description}}<br><br><strong>Stock:</strong>{{product.stock}}<br><br> <hr> <br><br><strong>Precio:</strong> ${{product.price}}  <br><br></p>
+       
 
+        <button class="rounded-lg outline outline-offset-2 outline-2 outline-green-500/70 p-1" data-id="{{product._id}}" data-cartid="{{cart._id}}">Agregar al carrito</button>
+ </div></div></div></div>
         {{/if}}
 <script src="/js/cart.js"></script>

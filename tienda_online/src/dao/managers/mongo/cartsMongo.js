@@ -1,4 +1,5 @@
 import { cartModel } from "../../models/carts.model.js";
+import { productsModel } from "../../models/products.model.js";
 
 export class CartsMongo {
     constructor(){
@@ -47,7 +48,6 @@ export class CartsMongo {
             throw error;
         }
     };
-
     async addToCart(cartId, productId) {
         try {
             const cart = await this.model.findById(cartId);
@@ -62,7 +62,7 @@ export class CartsMongo {
                 throw new Error("Producto no encontrado");
             }
 
-            cart.products.push(product); // Cambio de "products" a "product"
+            cart.products.push(product); 
             const updatedCart = await cart.save();
 
             return updatedCart;

@@ -1,9 +1,10 @@
-<p>{{message}}</p>
-<p style="color:red">{{error}}</p>
+<p class="text-2xl font-bold leading-7 text-cyan-500">{{message}}</p>
+<p class="text-2xl font-bold leading-7" style="color:red">{{error}}</p>
+<br>
 
 <form   method="post" action="/api/sessions/signup">
 
-      <h1 class="text-base font-semibold leading-7 text-gray-900">Formulario de Registro</h1>
+      <h1 class="text-2xl text-center font-semibold leading-7 text-gray-900">Formulario de Registro</h1>
     
 
             <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Nombre</label>
@@ -14,23 +15,23 @@
           <div class="mt-2">
             <input name="email" type="email" placeholder="   Correo electrónico" autocomplete="email" class="block ps-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-4">
             <input type="password" placeholder="   Contraseña" name="password" autocomplete="password" class="block  ps-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-
+<br>
           
-    <button class="rounded-md mt-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Registrarse</button>
+    <button class="rounded-md mt-2 bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">Registrarse</button>
   
 
 
 </form>
-{{!-- 
-<h1>Formulario de registro</h1>
-<p style="color:red">{{error}}</p>
 
-<form method="post" action="/api/sessions/signup">
-    <input type="text" placeholder="nombre" name="first_name"/>
-    <br/><br/>
-    <input type="email" placeholder="correo" name="email"/>
-    <br/><br/>
-    <input type="password" placeholder="contraseña" name="password"/>
-    <br/><br/>
-    <button>Registrarse</button>
-</form> --}}
+<br><br>
+<hr/><br>
+<a class="rounded-md mt-2 bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600" href="/cambio-password">
+    Restaurar contraseña
+</a>
+
+
+<br><br>
+<hr/><br>
+<a class="rounded-md mt-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" href="/api/sessions/loginGithub">
+       Iniciar sesión con GitHub
+</a>

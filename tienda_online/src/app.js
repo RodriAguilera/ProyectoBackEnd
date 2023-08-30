@@ -11,7 +11,9 @@ import {config} from "./config/config.js"
 import { chatModel } from "./dao/models/chat.model.js"
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import {sessionsRouter} from "./routes/sessions.routes.js"
+import {sessionsRouter} from "./routes/sessions.routes.js";
+import { initializePassport } from "./config/passportConfig.js";
+import passport from "passport";
 
 const port = config.server.port;
 const app = express();
@@ -93,18 +95,19 @@ io.on("connection",(socket)=>{
 
 //configuracion de las sessiones en el servidor
 app.use(session({
-  store: MongoStore.create({
-      mongoUrl:"mongodb+srv://rodrigoaguilera99519:VJ6JK99OXv6d7lOH@cluster0.re8pknm.mongodb.net/loginDB?retryWrites=true&w=majority"
+  store:MongoStore.create({
+      mongoUrl:config.mongo.url
   }),
-  secret:"loginSecretKey",//cifra el id de la sesion dentro de la cookie
+  secret:config.server.secretSession,
   resave:true,
   saveUninitialized:true
-}));//req.session
+}));
 
 
-
-
-
+//configuracion de passport
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 

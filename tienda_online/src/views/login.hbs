@@ -1,8 +1,9 @@
-<p>{{message}}</p>
-<p style="color:red">{{error}}</p>
+<p class="text-2xl font-bold leading-7 text-cyan-500">{{message}}</p>
+<p class="text-2xl font-bold leading-7" style="color:red">{{error}}</p>
+<br>
 
 <form  method="post" action="/api/sessions/login" >
-      <h2 class="text-base font-semibold leading-7 text-gray-900">Formulario de Login</h2>
+      <h2 class="text-2xl text-center font-semibold leading-7 text-gray-900">Formulario de Login</h2>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
           
             <input id="email" name="email" type="email" placeholder="   Correo electrónico" autocomplete="email" class="block ps-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-4">
@@ -12,6 +13,12 @@
     
 
 </form>
+
+<br><br>
+<hr/><br>
+<a class="rounded-md mt-2 bg-indigo-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-800" href="/api/sessions/loginGithub">
+       Iniciar sesión con GitHub
+</a>
 {{!-- 
 <h1>Formulario de login</h1>
 <p>{{message}}</p>

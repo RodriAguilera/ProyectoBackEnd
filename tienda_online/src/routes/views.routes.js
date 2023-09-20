@@ -1,23 +1,20 @@
 import { Router } from 'express';
-
+import { ViewsController } from "../controllers/views.controller.js";
 // import { ProductManager } from '../dao/managers/fileSystem/productManager.js';
 
-// const productService = new ProductManager('products.json');
+// const productsDao = new ProductManager('products.json');
 
-import { productService, cartService } from "../dao/index.js";
+import { productsDao, cartService } from "../dao/index.js";
 import { checkUserAuthenticated, showLoginView } from "../dao/middlewares/auth.js";
 
 const router = Router();
 
-router.get('/', async (req, res) => {
-        res.render('home'); 
-    
-});
+router.get("/",ViewsController.renderHome);
 
 router.get('/realtimeproducts', async (req, res) => {
     try {
-        // const productService = new ProductManager("products.json");
-        const products = await productService.get();
+        // const productsDao = new ProductManager("products.json");
+        const products = await productsDao.get();
         res.render('realTimeProducts', { products }); 
     } catch (error) {
         res.status(500).json({ status: 'error', message: error.message });
@@ -44,7 +41,7 @@ router.get("/products", async (req, res) => {
             ...(category ? { category: category } : {}),
         };
 
-        const result = await productService.getWithPaginate(query, {
+        const result = await productsDao.getWithPaginate(query, {
             page,
             limit,
             sort: { price: sortValue },
@@ -83,7 +80,7 @@ router.get("/products", async (req, res) => {
 router.get("/products/:pid", async (req, res) => {
     try {
         const productId = req.params.pid;
-        const product = await productService.getProductById(productId);
+        const product = await productsDao.getProductById(productId);
 
         if (!product) {
             return res.render("product", { error: "Producto no encontrado" });
@@ -108,18 +105,11 @@ router.get("/carts/:cid/products/:pid", async (req, res) => {
 });
 
 
-router.get("/registro",showLoginView,(req,res)=>{
-    res.render("signup");
-});
+router.get("/registro", ViewsController.renderSignup);
 
-router.get("/login", showLoginView, (req,res)=>{
-    res.render("login");
-});
+router.get("/login",ViewsController.renderLogin);
 
-router.get("/perfil", checkUserAuthenticated, (req,res)=>{
-    console.log(req.user);
-    res.render("profile",{user: JSON.parse(JSON.stringify(req.user))});
-});
+router.get("/perfil",ViewsController.renderProfile);
 
 router.get("/cambio-password", (req,res)=>{
     res.render("changePassword")

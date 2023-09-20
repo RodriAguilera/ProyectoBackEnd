@@ -2,10 +2,10 @@
 // import { ProductManager } from "../dao/managers/fileSystem/productManager.js";
 
 // const cartService = new CartManager("carts.json");
-// const productService = new ProductManager("products.json");
+// const productsDao = new ProductManager("products.json");
 
 import { Router } from "express";
-import { cartService, productService } from "../dao/index.js";
+import { cartService, productsDao } from "../dao/index.js";
 
 
 const router = Router();
@@ -52,7 +52,7 @@ router.post("/:cid/products/:pid", async (req, res) => {
         const productId = req.params.pid;
 
         const cart = await cartService.getById(cartId);
-        const product = await productService.getById(productId);
+        const product = await productsDao.getById(productId);
 
         if (!cart || !product) {
             return res.json({ status: "error", message: "Carrito o producto no encontrado" });

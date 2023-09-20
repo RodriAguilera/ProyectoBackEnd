@@ -38,7 +38,7 @@ const httpServer = app.listen(port, () =>
 const io = new Server(httpServer);// Conectar servidor con websocket
 
 //socket server realTimeProducts
-const productService = new ProductManager("products.json");
+const productsDao = new ProductManager("products.json");
 
 io.on("connection", (socket) => {
   console.log(`Nuevo cliente conectado ${socket.id}`);
@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
   socket.on('addProduct', async (productData) => {
     try {
       const { title, price } = productData;
-      const newProduct = await productService.save({ title, price });
+      const newProduct = await productsDao.save({ title, price });
       io.emit('newProduct', newProduct);
     } catch (error) {
       console.log(error.message);
@@ -58,7 +58,7 @@ io.on("connection", (socket) => {
     // Escuchar evento 'deleteProduct' del cliente
     socket.on('deleteProduct', async (productId) => { 
       try {
-        await productService.deleteProduct(productId); 
+        await productsDao.deleteProduct(productId); 
         io.emit('productDeleted', productId);
       } catch (error) {
         console.log(error.message);

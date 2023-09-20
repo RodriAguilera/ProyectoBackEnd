@@ -7,7 +7,7 @@ import { connectDB} from "../config/dbConnection.js";
 import { UsersMongo } from "./managers/mongo/usersMongo.js";
 
 //persistencia de archivos
-// const productService = new ProductManager(config.fileSystem.productsFile);
+// const productsDao = new ProductManager(config.fileSystem.productsFile);
 
 
 //persistencia de mongoDB
@@ -16,11 +16,11 @@ connectDB();
 
 
 
-const productService = new ProductsMongo();
+const productsDao = new ProductsMongo();
 const cartService = new CartsMongo();
-export {productService, cartService}
+export {productsDao, cartService}
 
 
 
-export const usersService = new UsersMongo();
+export const usersDao = new UsersMongo();
 

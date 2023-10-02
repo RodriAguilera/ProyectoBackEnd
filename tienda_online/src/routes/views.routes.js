@@ -4,7 +4,7 @@ import { ViewsController } from "../controllers/views.controller.js";
 
 // const productsDao = new ProductManager('products.json');
 
-import { productsDao, cartService } from "../dao/index.js";
+import { productsDao, cartsDao } from "../dao/index.js";
 import { checkUserAuthenticated, showLoginView } from "../dao/middlewares/auth.js";
 
 const router = Router();
@@ -97,7 +97,7 @@ router.get("/products/:pid", async (req, res) => {
 router.get("/carts/:cid/products/:pid", async (req, res) => {
     try {
         const cartId = req.params.cid;
-        const { cart, products } = await cartService.viewCart(cartId); 
+        const { cart, products } = await cartsDao.viewCart(cartId); 
         res.render("cart", { cart, products }); 
     } catch (error) {
         res.status(500).json({ status: "error", message: error.message });

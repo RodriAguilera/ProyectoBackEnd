@@ -3,7 +3,7 @@ import LocalStrategy from "passport-local";
 import { createHash, isValidPassword } from "../utils.js";
 import githubStrategy from "passport-github2";
 import { config } from "./config.js";
-import { UsersService } from "../services/users.services.js";
+import { UsersService } from "../services/users.service.js";
 
 export const initializePassport = ()=>{
     passport.use("signupStrategy", new LocalStrategy(
@@ -20,10 +20,15 @@ export const initializePassport = ()=>{
                 if(user){
                     return done(null, false)
                 }
+                let role = "user";
+                if(username.endsWith("@coder.com")){
+                    role="admin";
+                }
                 const newUser = {
                     first_name:first_name,
                     email: username,
-                    password:createHash(password)
+                    password:createHash(password),
+                    role:role
                 }
                 const userCreated = await UsersService.saveUser(newUser);
                 return done(null,userCreated)//En este punto passport completa el proceso de manera satisfactoria

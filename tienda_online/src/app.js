@@ -14,6 +14,9 @@ import MongoStore from "connect-mongo";
 import {sessionsRouter} from "./routes/sessions.routes.js";
 import { initializePassport } from "./config/passportConfig.js";
 import passport from "passport";
+import { generateProducts } from "./utils.js";
+import { errorHandler } from "./dao/middlewares/errorHandler.js";
+import { usersRouter } from "./routes/users.routes.js";
 
 const port = config.server.port;
 const app = express();
@@ -21,6 +24,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/public")));
+
 
 // Configuración del motor de vistas Handlebars
 app.engine(".hbs", engine({ extname: ".hbs" }));
@@ -116,8 +120,13 @@ app.use("/api/products", productsRouter);
 app.use("/api/products/:pid", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/sessions", sessionsRouter);
+app.use("/api/users", usersRouter);
+app.get("/mockingproducts", (req, res) => {
+  const cant = parseInt(req.query.cant) || 100;
+  const products = generateProducts(cant); 
+  res.json({ status: "success", data: products });
+});
 
-
-
+app.use(errorHandler);
 app.use(viewsRouter);
 export default app;

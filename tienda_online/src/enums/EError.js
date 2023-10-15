@@ -5,4 +5,5 @@ export const EError = {
     AUTH_ERROR:3, //Errores relacionados a la autenticación
     INVALID_JSON:4, //Errores relacionados al json de las peticiones
     INVALID_PARAM:5,
+    
 };

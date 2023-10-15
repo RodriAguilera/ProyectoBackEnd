@@ -1,29 +1,33 @@
 import {CartsService} from "../services/carts.service.js";
 import {ProductsService} from "../services/products.service.js";
+import { addLogger } from "../helpers/logger.js";
 
 
 
 export class CartsController {
-    static createCart = async(req, res)=>{
+    static createCart = async(req, res) => {
         try {
             const newCart = {};
             const cartCreated = await CartsService.createCart(newCart);
-            res.json({status:"success", data:cartCreated});
+            res.json({ status: "success", data: cartCreated });
         } catch (error) {
-            console.log(error.menssage)
-            res.json({status:"error", message:"hubo un error al crear el carrito"})
+            const logger = addLogger();
+            logger.error(`Error al crear el carrito: ${error.message}`);
+            res.json({ status: "error", message: "Hubo un error al crear el carrito" });
         }
     };
 
-    static getCarts = async(req, res)=>{
+    static getCarts = async(req, res) => {
         try {
             const carts = await CartsService.getCarts();
-            res.json({status:"success", data:carts});
+            res.json({ status: "success", data: carts });
         } catch (error) {
-            console.log(error.menssage)
-            res.json({status:"error", message:"hubo un error el listado de carritos"})
+            const logger = addLogger();
+            logger.error(`Error en el listado de carritos: ${error.message}`);
+            res.json({ status: "error", message: "Hubo un error en el listado de carritos" });
         }
     };
+
 
     static addProductToCart = async(req,res)=>{
         try {

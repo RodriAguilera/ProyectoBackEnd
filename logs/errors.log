@@ -1,0 +1,12 @@
+http: [GET] /loggerTest
+debug: Esto es un mensaje de depuración.
+info: Esto es un mensaje de información.
+warning: Esto es una advertencia.
+error: Esto es un error.
+debug: Esto es un mensaje de depuración.
+info: Esto es un mensaje de información.
+warning: Esto es una advertencia.
+error: Esto es un error.
+info: Servidor ok en el puerto 8080
+info: Servidor ok en el puerto 8080
+info: Servidor ok en el puerto 8080

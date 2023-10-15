@@ -17,6 +17,7 @@ import passport from "passport";
 import { generateProducts } from "./utils.js";
 import { errorHandler } from "./dao/middlewares/errorHandler.js";
 import { usersRouter } from "./routes/users.routes.js";
+import { addLogger } from "./helpers/logger.js";
 
 const port = config.server.port;
 const app = express();
@@ -34,10 +35,11 @@ app.set("views", path.join(__dirname, "/views"));
 
 
 // Guardar el servidor HTTP express en una variable
-const httpServer = app.listen(port, () =>
-  console.log(`Servidor ok en el puerto ${port}`)
-);
 
+const httpServer = app.listen(port, () => {
+  const logger = addLogger();
+  logger.info(`Servidor ok en el puerto ${port}`);
+});
 //Servidor Websocket
 const io = new Server(httpServer);// Conectar servidor con websocket
 
@@ -45,7 +47,8 @@ const io = new Server(httpServer);// Conectar servidor con websocket
 const productsDao = new ProductManager("products.json");
 
 io.on("connection", (socket) => {
-  console.log(`Nuevo cliente conectado ${socket.id}`);
+  const logger = addLogger();
+  logger.info(`Nuevo cliente conectado ${socket.id}`);
 
   // socket.on("mensaje", (data) =>{console.log(`Datos recibidos del cliente: ${data}`);})
 
@@ -113,8 +116,6 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 // Rutas
 app.use("/api/products", productsRouter);
 app.use("/api/products/:pid", productsRouter);
@@ -125,6 +126,19 @@ app.get("/mockingproducts", (req, res) => {
   const cant = parseInt(req.query.cant) || 100;
   const products = generateProducts(cant); 
   res.json({ status: "success", data: products });
+});
+
+
+//logger
+const logger = addLogger(); 
+
+app.get("/loggerTest", (req, res) => {
+  logger.debug("Esto es un mensaje de depuración.");
+  logger.info("Esto es un mensaje de información.");
+  logger.warning("Esto es una advertencia.");
+  logger.error("Esto es un error.");
+  logger.fatal("Esto es un error fatal.");
+  res.send("Verifica la consola o el archivo de registro para ver los mensajes.");
 });
 
 app.use(errorHandler);

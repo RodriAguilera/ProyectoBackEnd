@@ -115,6 +115,9 @@ router.get("/cambio-password", (req,res)=>{
     res.render("changePassword")
 });
 
+router.get("/forgot-password", ViewsController.renderForgot);
+router.get("/reset-password", ViewsController.renderResetPass);
+
 
 
 export { router as viewsRouter };

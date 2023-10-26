@@ -50,8 +50,6 @@ io.on("connection", (socket) => {
   const logger = addLogger();
   logger.info(`Nuevo cliente conectado ${socket.id}`);
 
-  // socket.on("mensaje", (data) =>{console.log(`Datos recibidos del cliente: ${data}`);})
-
   socket.on('addProduct', async (productData) => {
     try {
       const { title, price } = productData;

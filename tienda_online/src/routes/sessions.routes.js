@@ -33,5 +33,8 @@ router.get("/github-callback", passport.authenticate("githubLoginStrategy",{
 router.get("/logout", SessionsController.logout)
 
 
+router.post("/forgot-password", SessionsController.forgotPassword);
+
+router.post("/reset-password", SessionsController.resetPassword);
 
 export {router as sessionsRouter};

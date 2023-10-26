@@ -41,7 +41,7 @@ export class UsersMongo{
 
 
     };
-
+    
     async update(userId,newUserInfo){
         try {
             const userUpdated = await this.model.findByIdAndUpdate(userId,newUserInfo,{new:true})
@@ -51,5 +51,6 @@ export class UsersMongo{
             throw error;
         }
     };
+
 
 }

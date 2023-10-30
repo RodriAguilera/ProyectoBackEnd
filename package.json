@@ -25,7 +25,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon tienda_online/src/app.js"
+    "start": "nodemon tienda_online/src/app.js",
+    "update-products": "node tienda_online/src/scripts/mongo.scripts.js"
   },
   "keywords": [],
   "author": "",

@@ -3,12 +3,10 @@ import { CustomError } from "../services/error/customError.service.js";//estruct
 import { EError } from "../enums/EError.js";//tipos de error
 import { createUserErrorMsg } from "../services/error/createUserError.service.js"; //msg error personalizado
 import { invalidParamMsg } from "../services/error/invalidParamUser.service.js";
+import {checkRole} from "../dao/middlewares/auth.js";
+import { UsersController } from "../controllers/users.controller.js";
 
 const router = Router();
-
-const users = [
-    {id:1,name:"pepe", lastname:"perez", email:"pepe@gmail.com"}
-];
 
 router.get("/",(req,res)=>{
     res.json({status:"success", data:users});
@@ -42,5 +40,8 @@ router.get("/:uid", (req,res)=>{
     }
     res.json({status:"success", message:"usuario encontrado"});
 });
+
+
+router.post("/premium/:uid", checkRole(["admin"]) ,UsersController.modifyRole);
 
 export {router as usersRouter};

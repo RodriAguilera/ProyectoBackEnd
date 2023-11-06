@@ -1,0 +1,305 @@
+paths:
+  /api/products:
+    get:
+      summary: "Endpoint para obtener todos los productos"
+      tags:
+        - "Productos"
+      responses:
+        "200":
+          description: "Respuesta exitosa"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        "500":
+          description: "Error del servidor"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+
+    post:
+      summary: "Crear un nuevo producto"
+      tags:
+        - "Productos"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        "201":
+          description: "Producto creado exitosamente"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        "400":
+          description: "Solicitud incorrecta"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        "500":
+          description: "Error del servidor"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+
+  /api/products/{pid}:
+    get:
+      summary: "Obtener un producto por ID"
+      tags:
+        - "Productos"
+      parameters:
+        - name: "pid"
+          in: "path"
+          required: true
+          type: string
+          description: "ID del producto a buscar"
+      responses:
+        "200":
+          description: "Producto encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "404":
+          description: "Producto no encontrado"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        "500":
+          description: "Error del servidor"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+
+    put:
+      summary: "Actualizar un producto existente"
+      tags:
+        - "Productos"
+      parameters:
+        - name: "pid"
+          in: "path"
+          required: true
+          type: string
+          description: "ID del producto a actualizar"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/UpdateProduct"
+      responses:
+        "200":
+          description: "Producto actualizado exitosamente"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        "404":
+          description: "Producto no encontrado"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        "500":
+          description: "Error del servidor"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+
+    delete:
+      summary: "Eliminar un producto por ID"
+      tags:
+        - "Productos"
+      parameters:
+        - name: "pid"
+          in: "path"
+          required: true
+          type: string
+          description: "ID del producto a eliminar"
+      responses:
+        "200":
+          description: "Producto eliminado exitosamente"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        "404":
+          description: "Producto no encontrado"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        "403":
+          description: "Permiso denegado"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        "500":
+          description: "Error del servidor"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID del producto generado por MongoDB
+        title:
+          type: string
+          description: "Título del producto"
+        description:
+          type: string
+          description: "Descripción del producto"
+        price:
+          type: number
+          description: "Precio del producto"
+        code:
+          type: string
+          description: "Código del producto"
+        thumbnail:
+          type: string
+          description: "URL de la imagen en miniatura del producto"
+        category:
+          type: string
+          description: "Categoría del producto"
+        enum:
+          - "Calzado Running"
+          - "Calzado urbano"
+        stock:
+          type: number
+          description: "Cantidad en stock del producto"
+        status:
+          type: boolean
+          description: "Estado del producto (activo/inactivo)"
+        example:
+          _id: 64ec9b96abb5dbcfaf99231f
+          title: Adidas Ultraboost
+          description: Zapatillas deportivas para running con tecnología de amortiguación.
+          price: 62400
+          code: ADUB123
+          thumbnail: https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw515ca8e8/products/AD_GX3062/AD_GX3062-1.JPG
+          category: Calzado Running
+          stock: 20
+          status: true
+  requestBodies:
+    UpdateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: "Título del producto"
+        description:
+          type: string
+          description: "Descripción del producto"
+        price:
+          type: number
+          description: "Precio del producto"
+        code:
+          type: string
+          description: "Código del producto"
+        thumbnail:
+          type: string
+          description: "URL de la imagen en miniatura del producto"
+        category:
+          type: string
+          description: "Categoría del producto"
+        enum:
+          - "Calzado Running"
+          - "Calzado urbano"
+        stock:
+          type: number
+          description: "Cantidad en stock del producto"
+        status:
+          type: boolean
+          description: "Estado del producto (activo/inactivo)"
+      example:
+          title: Adidas Ultraboost
+          description: Zapatillas deportivas para running con tecnología de amortiguación.
+          price: 62400
+          code: ADUB123
+          thumbnail: https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw515ca8e8/products/AD_GX3062/AD_GX3062-1.JPG
+          category: Calzado Running
+          stock: 20
+          status: true

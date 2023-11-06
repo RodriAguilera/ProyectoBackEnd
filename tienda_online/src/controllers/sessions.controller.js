@@ -19,21 +19,21 @@ export class SessionsController{
         res.render("login",{error:"Credenciales invalidas"});
     };
 
-    static changePass = async (req,res)=>{
-        try {
-            const form = req.body;
-            const user = await usersDao.getByEmail(form.email);
-            if(!user){
-                return res.render("changePassword",{error:"No es posible cambiar la contraseña"});
-            }
-            user.password = createHash(form.newPassword);
-            // console.log(user);
-            await usersDao.update(user._id,user);
-            return res.render("login",{message:"Contraseña restaurada"})
-        } catch (error) {
-            res.render("changePassword",{error:error.message});
-        }
-    };
+    // static changePass = async (req,res)=>{
+    //     try {
+    //         const form = req.body;
+    //         const user = await usersDao.getByEmail(form.email);
+    //         if(!user){
+    //             return res.render("changePassword",{error:"No es posible cambiar la contraseña"});
+    //         }
+    //         user.password = createHash(form.newPassword);
+    //         // console.log(user);
+    //         await usersDao.update(user._id,user);
+    //         return res.render("login",{message:"Contraseña restaurada"})
+    //     } catch (error) {
+    //         res.render("changePassword",{error:error.message});
+    //     }
+    // };
 
 
     static logout = (req,res)=>{
@@ -72,17 +72,22 @@ export class SessionsController{
             const token = req.query.token;
             const {newPassword} = req.body;
             const validEmail = validateToken(token);
-            if(validEmail){//token correcto
+            if (validEmail) { // token correcto
                 const user = await UsersService.getUserByEmail(validEmail);
-                if(user){
+    
+                if (user) {
                     user.password = createHash(newPassword);
-                    await UsersService.updateUser(user._id,user);
-                    res.send("Contraseña actualizada <a href='/login'>Ir al login</a>")
+    
+                    await UsersService.updateUser(user._id, user);
+    
+                    res.send("Contraseña actualizada <a href='/login'>Ir al login</a>");
                 }
             } else {
-                return res.send("El token ya caduco, volver a intentarlo <a href='/forgot-password'>Restablecer contraseña</a>");
+                console.log('Token inválido');
+                return res.send("El token ya caducó, volver a intentarlo <a href='/forgot-password'>Restablecer contraseña</a>");
             }
         } catch (error) {
+            console.error('Error:', error);
             res.send("No se pudo restablecer la contraseña, volver a intentarlo. <a href='/forgot-password'>Restablecer contraseña</a>");
         }
     };

@@ -18,6 +18,9 @@ import { generateProducts } from "./utils.js";
 import { errorHandler } from "./dao/middlewares/errorHandler.js";
 import { usersRouter } from "./routes/users.routes.js";
 import { addLogger } from "./helpers/logger.js";
+import { swaggerSpecs } from './config/swagger.config.js';
+import swaggerUI from "swagger-ui-express";
+
 
 const port = config.server.port;
 const app = express();
@@ -141,4 +144,7 @@ app.get("/loggerTest", (req, res) => {
 
 app.use(errorHandler);
 app.use(viewsRouter);
+//endpoint para acceder a la documentacion de la api
+app.use("/api/docs",swaggerUI.serve,swaggerUI.setup(swaggerSpecs));
+
 export default app;

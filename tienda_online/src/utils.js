@@ -8,8 +8,10 @@ import {faker,Faker,es,en} from "@faker-js/faker";
 
 export const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export const createHash = (password)=>{
-    return bcrypt.hashSync(password,bcrypt.genSaltSync());
+
+export const createHash = (password) => {
+  const saltRounds = 10; 
+  return bcrypt.hashSync(password, saltRounds);
 };
 
 export const isValidPassword = (userDB,password)=>{

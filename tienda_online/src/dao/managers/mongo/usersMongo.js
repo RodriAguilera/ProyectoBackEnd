@@ -5,6 +5,15 @@ export class UsersMongo{
         this.model = usersModel;
     };
 
+    async getAll() {
+        try {
+          const allUsers = await this.model.find();
+          return allUsers;
+        } catch (error) {
+          throw error;
+        }
+      }
+
     async save(user){
         try {
             const userCreated = await this.model.create(user);

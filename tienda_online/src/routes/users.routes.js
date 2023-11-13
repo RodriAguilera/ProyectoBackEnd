@@ -8,14 +8,12 @@ import { UsersController } from "../controllers/users.controller.js";
 
 const router = Router();
 
-router.get("/",(req,res)=>{
-    res.json({status:"success", data:users});
-});
+router.get('/',UsersController.getAllUsers);
 
 router.post("/", (req,res)=>{
-    const {name,lastname,email} = req.body;
-    if(!name || !lastname || !email){
-        //datos no validos, generar el error
+    const {first_name, last_name,email} = req.body;
+    if(!first_name || ! last_name || !email){
+        //datos no valido last_names, generar el error
         CustomError.createError({
             name:"error createUser",
             cause:createUserErrorMsg(req.body),

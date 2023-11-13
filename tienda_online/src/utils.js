@@ -28,6 +28,7 @@ export const validateToken = (token)=>{
   }
 };
 
+export const passwordValidation = async(user,password) => bcrypt.compare(password,user.password);
 // faker
 
 const { database, commerce, image, string } = faker;

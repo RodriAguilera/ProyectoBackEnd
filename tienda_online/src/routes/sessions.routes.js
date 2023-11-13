@@ -20,7 +20,7 @@ router.post("/login", passport.authenticate("loginStrategy",{
 
 router.get("/fail-login", SessionsController.failLogin);
 
-// router.post("/changePass", SessionsController.changePass);
+router.post("/changePass", SessionsController.changePass);
 
 router.get("/loginGithub", passport.authenticate("githubLoginStrategy"));
 

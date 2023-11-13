@@ -102,6 +102,8 @@ io.on("connection",(socket)=>{
 
 
 //configuracion de las sessiones en el servidor
+
+
 app.use(session({
   store:MongoStore.create({
       mongoUrl:config.mongo.url

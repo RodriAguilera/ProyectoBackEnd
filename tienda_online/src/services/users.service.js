@@ -1,6 +1,11 @@
 import { usersDao } from "../dao/index.js";
 
 export class UsersService{
+
+    static getAll = async () => {
+        return await usersDao.getAll();
+      };
+      
     static getUserByEmail = async(email)=>{
         return await usersDao.getByEmail(email);
     };

@@ -4,18 +4,26 @@ import passport from "passport";
 
 import { SessionsController } from "../controllers/sessions.controller.js";
 
+import { uploaderProfile } from "../utils.js";
 
 const router = Router();
 
-router.post("/signup", passport.authenticate("signupStrategy",{
+router.post("/signup", uploaderProfile.single("avatar") , passport.authenticate("signupStrategy", {
     failureRedirect:"/api/sessions/fail-signup"
-}) ,  SessionsController.redirectLogin);
+}), SessionsController.redirectLogin);
 
 router.get("/fail-signup", SessionsController.failSignup);
 
-router.post("/login", passport.authenticate("loginStrategy",{
-    failureRedirect:"/api/sessions/fail-login"
-}),  SessionsController.renderProfile); 
+router.post("/login", passport.authenticate("loginStrategy", {
+    failureRedirect: "/api/sessions/fail-login"
+  }), (req, res) => {
+    console.log('Información del usuario después de la autenticación:', req.user);
+    SessionsController.renderProfile(req, res);
+  });
+  
+//   router.post("/login", passport.authenticate("loginStrategy", {
+//     failureRedirect:"/api/sessions/fail-login"
+// }), SessionsController.renderProfile);
 
 
 router.get("/fail-login", SessionsController.failLogin);

@@ -38,18 +38,18 @@ export class SessionsController {
     }
   };
 
-  static logout = (req, res) => {
-    req.logOut(error => {
-      if (error) {
-        return res.render("profile", { user: req.user, error: "No se pudo cerrar la sesion" });
-      } else {
-        req.session.destroy(error => {
-          if (error) return res.render("profile", { user: req.session.userInfo, error: "No se pudo cerrar la sesion" });
-          res.redirect("/");
-        });
-      }
-    });
-  };
+  static logout = async(req,res)=>{
+    try {
+        const user = req.user;
+        user.last_connection= new Date();
+        await UsersService.updateUser(user._id, user);
+        await req.session.destroy();
+        res.json({status:"success", message:"Sesión finalizada"});
+    } catch (error) {
+        console.log(error);
+        res.json({status:"error", message:"No se pudo cerrar la sesión"});
+    }
+}
 
   static forgotPassword = async (req, res) => {
     try {

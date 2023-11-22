@@ -20,10 +20,6 @@ const productSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    thumbnail:{   
-         type:String,
-       
-    },
     category:{
         type:String,
         required:true,
@@ -35,6 +31,14 @@ const productSchema = new mongoose.Schema({
     },
     status:{
         type:Boolean,
+        required:true
+    },
+    owner:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"users"
+    },
+    thumbnail:{
+        type:String,
         required:true
     }
 });

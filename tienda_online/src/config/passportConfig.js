@@ -11,10 +11,11 @@ export const initializePassport = ()=>{
             //username, password
             usernameField:"email",
             passReqToCallback:true,
-        },
+        },  
         async (req, username, password, done)=>{
             try {
-                const {first_name} = req.body;
+                const {first_name, last_name, age} = req.body;
+                console.log(req.file);
                 //verificar si el usuario ya se registro
                 const user = await UsersService.getUserByEmail(username);
                 if(user){
@@ -27,8 +28,9 @@ export const initializePassport = ()=>{
                 const newUser = {
                     first_name:first_name,
                     email: username,
-                    password:createHash(password),
-                    role:role
+                    password: createHash(password),
+                    role:role,
+                    avatar:req.file.filename,
                 }
                 const userCreated = await UsersService.saveUser(newUser);
                 return done(null,userCreated)//En este punto passport completa el proceso de manera satisfactoria
@@ -49,8 +51,10 @@ export const initializePassport = ()=>{
                 if(!user){
                     return done(null, false)
                 }
-                //si el usuario existe, validar la contraseña
+                //si el usuario ya se registro, validar la contraseña
                 if(isValidPassword(user,password)){
+                    user.last_connection = new Date();
+                    await UsersService.updateUser(user._id,user);
                     return done(null,user);
                 } else {
                     return done(null, false);
@@ -60,6 +64,18 @@ export const initializePassport = ()=>{
             }
         }
     ));
+    //serializacion y deserializacion
+    passport.serializeUser((user,done)=>{
+        done(null,user._id);
+    });
+
+    passport.deserializeUser(async(id,done)=>{
+        const user = await UsersService.getUserById(id);
+        done(null,user) //req.user --->sesions
+    });
+}
+    
+    
     passport.use("githubLoginStrategy", new githubStrategy(
         {
             clientID: config.github.clientId,
@@ -87,16 +103,3 @@ export const initializePassport = ()=>{
             }
         }
     ));
-
-   
-
-    //serializacion y deserializacion
-    passport.serializeUser((user,done)=>{
-        done(null,user._id);
-    });
-
-    passport.deserializeUser(async(id,done)=>{
-        const user = await UsersService.getUserById(id);
-        done(null,user)
-    });
-}

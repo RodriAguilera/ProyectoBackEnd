@@ -18,6 +18,7 @@ export const showLoginView = (req,res,next)=>{
 
 export const checkRole = (roles)=>{ 
     return (req,res,next)=>{
+        console.log("req", req.user.role);
         if(roles.includes(req.user.role)){
             next();
         } else {
@@ -26,10 +27,14 @@ export const checkRole = (roles)=>{
     }
 };
 
-export const checkAuthenticated = (req,res,next)=>{
-    if(req.user){
-        next();
+export const checkAuthenticated = (req, res, next) => {
+    console.log('Middleware checkAuthenticated ejecutado. isAuthenticated:', req.isAuthenticated(), 'Usuario:', req.user);
+    if (req.isAuthenticated()) {
+      console.log('Usuario autenticado:', req.user);
+      next();
     } else {
-        res.json({status:"error", message:"Debes estar autenticado"});
+      console.log('Usuario no autenticado');
+      res.json({ status: "error", message: "Debes estar autenticado" });
     }
-};
+  };
+  

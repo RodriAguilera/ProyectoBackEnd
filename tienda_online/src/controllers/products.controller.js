@@ -28,16 +28,25 @@ export class ProductsController{
     };
 
     static createProduct = async(req,res)=>{
-        //Agregar el producto
         try {
+            console.log('Usuario autenticado:', req.user); 
             const productInfo = req.body;
             productInfo.owner = req.user._id;
+            productInfo.thumbnail = req.file.filename;
+            
+            console.log('Información del producto a crear:', productInfo); 
+    
             const productCreated = await ProductsService.createProduct(productInfo);
+    
+            console.log('Producto creado con éxito:', productCreated); 
+    
             res.json({status:"success", data:productCreated, message:"producto creado"});
         } catch (error) {
+            console.error('Error al crear el producto:', error); 
             res.json({status:"error", message:error.message});
         }
     };
+    
 
     static updateProduct = async(req,res)=>{
         try {

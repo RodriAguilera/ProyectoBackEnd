@@ -7,7 +7,7 @@ export class UsersMongo{
 
     async getAll() {
         try {
-          const allUsers = await this.model.find();
+          const allUsers = await this.model.find().lean();
           return allUsers;
         } catch (error) {
           throw error;

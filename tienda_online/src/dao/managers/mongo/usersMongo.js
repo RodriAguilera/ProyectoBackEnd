@@ -7,7 +7,7 @@ export class UsersMongo{
 
     async getAll() {
         try {
-          const allUsers = await this.model.find().lean();
+          const allUsers = await this.model.find({}, 'first_name email role').lean();
           return allUsers;
         } catch (error) {
           throw error;
@@ -60,6 +60,15 @@ export class UsersMongo{
             throw error;
         }
     };
-
+    async getInactiveUsers(inactiveDate) {
+        try {
+          const inactiveUsers = await this.model
+            .find({ last_connection: { $lt: inactiveDate } }, 'first_name email')
+            .lean();
+          return inactiveUsers;
+        } catch (error) {
+          throw error;
+        }
+      }
 
 }

@@ -18,5 +18,9 @@ export const config = {
         account:process.env.GMAIL_SALES,
         password:process.env.GMAIL_SALES_PASSWORD,
         secretToken:process.env.SECRET_TOKEN_EMAIL
+    },
+    stripe: {
+        keyBE:process.env.STRIPE_BACKEND_KEY
     }
+    
 }

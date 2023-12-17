@@ -5,7 +5,9 @@ import { ViewsController } from "../controllers/views.controller.js";
 // const productsDao = new ProductManager('products.json');
 
 import { productsDao, cartsDao } from "../dao/index.js";
-import { checkUserAuthenticated, showLoginView } from "../dao/middlewares/auth.js";
+import { checkRole } from "../dao/middlewares/auth.js";
+import { UsersController } from "../controllers/users.controller.js";
+import { usersModel } from "../dao/models/users.model.js";
 
 const router = Router();
 
@@ -117,7 +119,15 @@ router.get("/cambio-password", (req,res)=>{
 
 router.get("/forgot-password", ViewsController.renderForgot);
 router.get("/reset-password", ViewsController.renderResetPass);
-
+router.get('/admin', checkRole(['admin']), async (req, res) => {
+    try {
+        const users = await usersModel.find({}, 'first_name last_name email role').lean();
+        res.render('admin', { users });
+    } catch (error) {
+        console.error(`Error al obtener usuarios: ${error.message}`);
+        res.status(500).send('Error interno del servidor');
+    }
+});
 
 
 export { router as viewsRouter };

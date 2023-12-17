@@ -1,4 +1,6 @@
 import { UsersService } from "../services/users.service.js";
+import { sendInactiveAccountEmail } from '../helpers/gmail.js';
+
 
 export class UsersController {
   static modifyRole = async(req,res)=>{
@@ -27,14 +29,14 @@ export class UsersController {
     }
 };
 
-  static getAllUsers = async (req, res) => {
-    try {
-      const users = await UsersService.getAll();
-      res.send({ status: "success", payload: users });
-    } catch (error) {
-      res.json({ status: "error", message: error.message });
-    }
-  };
+static getAllUsers = async (req, res) => {
+  try {
+    const users = await UsersService.getAll();
+    res.send({ status: "success", payload: users });
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
+};
 
   static getUser = async (req, res) => {
     try {
@@ -103,5 +105,23 @@ export class UsersController {
         console.log(error.message);
         res.json({status:"error", message:"No se pudo cargar los documentos"});
     }
+};
+
+static deleteInactiveUsers = async (req, res) => {
+  try {
+    const inactiveUsers = await UsersService.getInactiveUsers(2); 
+    // Enviar correos y eliminar usuarios
+    await Promise.all(
+      inactiveUsers.map(async (user) => {
+        await sendInactiveAccountEmail(user.email);
+
+        await UsersService.deleteUser(user._id);
+      })
+    );
+
+    res.json({ status: 'success', message: 'Usuarios inactivos eliminados' });
+  } catch (error) {
+    res.json({ status: 'error', message: error.message });
+  }
 };
 }

@@ -1,0 +1,25 @@
+  <h1>Panel de Administrador</h1>
+    
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Correo Electrónico</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each users}}
+                <tr>
+                    <td>{{first_name}} {{last_name}}</td>
+                    <td>{{email}}</td>
+                    <td>{{role}}</td>
+                    <td><br/><br/>
+                        <a href="/admin/modify-role/{{_id}}">Modificar Rol</a>
+                        <a href="/admin/delete-user/{{_id}}" onclick="return confirm('¿Seguro que quieres eliminar al usuario con ID: {{_id}}?')">Eliminar Usuario</a>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>

@@ -20,6 +20,8 @@ import { usersRouter } from "./routes/users.routes.js";
 import { addLogger } from "./helpers/logger.js";
 import { swaggerSpecs } from './config/swagger.config.js';
 import swaggerUI from "swagger-ui-express";
+import { paymentsRouter } from "./routes/payments.routes.js";
+
 
 
 const port = config.server.port;
@@ -130,7 +132,7 @@ app.get("/mockingproducts", (req, res) => {
   const products = generateProducts(cant); 
   res.json({ status: "success", data: products });
 });
-
+app.use("/api/payments", paymentsRouter);
 
 //logger
 const logger = addLogger(); 

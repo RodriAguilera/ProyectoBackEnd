@@ -5,7 +5,7 @@ export class UsersService{
     static getAll = async () => {
         return await usersDao.getAll();
       };
-      
+
     static getUserByEmail = async(email)=>{
         return await usersDao.getByEmail(email);
     };
@@ -23,4 +23,19 @@ export class UsersService{
     };
 
 
+    
+    static deleteUser = async (userId) => {
+        try {
+            return await usersDao.deleteUser(userId);
+        } catch (error) {
+            throw new Error(`Error deleting user: ${error.message}`);
+        }
+    };
+
+    static getInactiveUsers = async (days) => {
+        const inactiveDate = new Date();
+        inactiveDate.setDate(inactiveDate.getDate() - days);
+    
+        return await usersDao.getInactiveUsers(inactiveDate);
+      };
 };

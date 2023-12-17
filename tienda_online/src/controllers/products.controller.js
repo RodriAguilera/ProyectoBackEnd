@@ -1,4 +1,5 @@
 import { ProductsService } from "../services/products.service.js";
+import { sendProductDeletedEmail } from "../helpers/gmail.js"
 
 export class ProductsController{
     static getProducts = async (req, res) => {
@@ -77,6 +78,25 @@ export class ProductsController{
             res.json({status:"error", message:error.message});
         }
     };
-
+    static deleteProductAndNotify = async (req, res) => {
+        try {
+          const productId = req.params.pid;
+          const product = await ProductsService.getProduct(productId);
+    
+          if ((req.user.role === "premium" && product.owner.toString() === req.user._id.toString()) || req.user.role === "admin") {
+            await ProductsService.deleteProduct(productId);
+    
+            if (req.user.role === "premium") {
+              await sendProductDeletedEmail(req.user.email, product.title);
+            }
+    
+            return res.json({ status: "success", message: "Producto eliminado" });
+          } else {
+            return res.json({ status: "error", message: "No tienes permisos" });
+          }
+        } catch (error) {
+          res.json({ status: "error", message: error.message });
+        }
+      };
 
 };

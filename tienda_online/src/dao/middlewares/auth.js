@@ -10,7 +10,7 @@ export const checkUserAuthenticated = (req,res,next)=>{
 export const showLoginView = (req,res,next)=>{
 
     if(req.user){
-        res.render("profile");
+        res.render("profile", {user});
     } else {
         next();
     }

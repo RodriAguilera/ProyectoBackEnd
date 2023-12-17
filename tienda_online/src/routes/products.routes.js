@@ -29,6 +29,7 @@ router.post(
 
 router.put("/:pid", checkAuthenticated, checkRole(["admin"]), ProductsController.updateProduct);
 router.delete("/:pid", checkAuthenticated, checkRole(["admin", "premium"]), ProductsController.deleteProduct);
+router.delete("/:pid", checkAuthenticated, checkRole(["admin", "premium"]), ProductsController.deleteProductAndNotify);
 
 
 export { router as productsRouter };

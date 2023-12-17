@@ -16,7 +16,9 @@ export class SessionsController {
   };
 
   static renderProfile = (req, res) => {
-    res.redirect("/perfil");
+    const user = req.user;
+
+    res.render("profile",{user});
   };
 
   static failLogin = (req, res) => {
